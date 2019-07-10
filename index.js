@@ -2,7 +2,9 @@ document.addEventListener('DOMContentLoaded', init())
 
 function init(){
      clearHTML()
+     getUserDiv()
      getUser()
+     
     
     //checks to see if the submit is for posting a new character or editing an existing one
     getForm().addEventListener("submit", (e) => {
@@ -38,8 +40,10 @@ function createCardDiv(){
 /////////////////////////CLEARING AND SHOWING HTML///////////////////////////
 
 function clearHTML(){
-  div1 =  document.getElementById('bigaf-container')
+  div1 =  document.getElementById('div-form')
+  div2 = document.getElementById('card-div')
   div1.style.display = "none";
+  div2.style.display = "none";
 }
 
 function showHTML(){
@@ -60,6 +64,15 @@ function getNuArr(){
     //gets the inputs of the form by class name
     let arr = document.getElementsByClassName('form-input')
     return arr
+}
+
+function getUserDiv(){
+   let row = document.querySelector('.row')
+   let div = document.querySelector('.userDiv')
+   div.classList.add('col-12')
+   div.style.textAlign = "center"
+    row.append(div)
+   return row
 }
 
 
@@ -220,7 +233,7 @@ function characterInfo(character){
         btn.className += 'btn btn-secondary btn-sm'
         btn.innerText = 'go back'
         //when clicked, shows everyting back to DOM 
-        btn.addEventListener('click', (e) => retrieveCharacters(e))//line 229
+        btn.addEventListener('click', (e) => retrieveCharacters(e))//line 238
     ul.append(li1, li2, li3, li4, li5, li6, li7, li8, li9, img, btn)
     h2.append(ul)
     newDiv.append(h2)
