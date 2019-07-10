@@ -6,6 +6,14 @@
     font-family: fantasy;
 }
 
+body {
+    text-align: left;
+    height: 100%;
+    background-image: url(./logo/background.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+}
+
 .header img {
     float: left;
 }
