@@ -100,10 +100,10 @@ function display(user){
     let userDiv = document.querySelector('.userDiv')
     userDiv.id = user.id
     
-    let h2 = document.createElement('h2')
-    h2.innerText = user.username
+    let h5 = document.createElement('h5')
+    h5.innerText = `Welcome ${user.username}!`
     userDiv.innerHTML = ''
-    userDiv.appendChild(h2)
+    userDiv.appendChild(h5)
     //putting characters to cards
     user.characters.forEach(character => { 
          createCard(character)//line 102
@@ -232,6 +232,7 @@ function characterInfo(character){
         btn.type = 'button'
         btn.className += 'btn btn-secondary btn-sm'
         btn.innerText = 'go back'
+        btn.style.backgroundColor = 'green'
         //when clicked, shows everyting back to DOM 
         btn.addEventListener('click', (e) => retrieveCharacters(e))//line 238
     ul.append(li1, li2, li3, li4, li5, li6, li7, li8, li9, img, btn)
