@@ -245,7 +245,7 @@ function characterInfo(character){
         btn.type = 'button'
         btn.className += 'btn btn-secondary btn-sm'
         btn.innerText = 'go back'
-        btn.style.backgroundColor = 'green'
+        btn.style.backgroundColor = 'red'
         //when clicked, shows everyting back to DOM 
         btn.addEventListener('click', (e) => retrieveCharacters(e))//line 238
     ul.append(li1, li2, li3, li4, li5, li6, li7, li8, li9, btn)
