@@ -3,7 +3,9 @@ document.addEventListener('DOMContentLoaded', init())
 function init(){
     clearHTML()
     getUser()
+    
 }
+getForm().addEventListener("submit", changeChar)
 ////////////////////////////////////////////////////////////////////////
 function createDiv(){
     return document.createElement('div')
@@ -24,10 +26,11 @@ function clearHTML(){
 
 function getForm(){
     return document.getElementById('div-form').children[0]
+
 }
 
 function getNuArr(){
-    let arr = document.getElementsByClassName('col-sm-4')
+    let arr = document.getElementsByClassName('form-input')
     return arr
 }
 
@@ -71,7 +74,7 @@ function display(user){
     h2.innerText = user.username
     div.innerHTML = ''
     div.appendChild(h2)
-    user.characters.forEach(character => {
+    user.characters.forEach(character => { 
         let div0 = document.querySelector('#card-div')
         let div1 = createDiv()
             div1.classList.add('card')
@@ -84,10 +87,14 @@ function display(user){
         let img = document.createElement('img')
             img.src = character.picture
             img.classList.add("card-img-top")
-            img.addEventListener('click', (e) => characterInfo( character, e))
-        let btn1 = createBtn()
+            img.addEventListener('click', (e) => {
+                fetchCharacter(character)
+                
+            })
+        let btn1 = document.createElement('button')
             btn1.className += 'btn btn-secondary btn-sm'
             btn1.innerText = 'Edit'
+            btn1.dataset.characterId = character.id
             btn1.addEventListener('click', (e) => {
                 editChar(e, character)
             })
@@ -103,14 +110,20 @@ function createCharacter(){
 
 }
 
+function fetchCharacter(character){
+    fetch(`http://localhost:3000/characters/${character.id}`)
+        .then(resp => resp.json())
+        .then(data => characterInfo(data))
+}
 
-function characterInfo(character, e){
+function characterInfo(character){
     let rowClass = document.querySelector('.row')
     let cardDiv = document.getElementById('card-div')
+    let form = document.getElementById('div-form')
     cardDiv.style.display = "none";
+    form.style.display = 'none';
     let newDiv = createCardDiv()
     let ul = document.createElement('ul')
-    debugger
     let li1 = createLi()
         li1.innerText = `Gender: ${character.gender}` 
     let li2 = createLi()
@@ -138,6 +151,10 @@ function characterInfo(character, e){
         btn.className += 'btn btn-secondary btn-sm'
         btn.innerText = 'go back'
         btn.addEventListener('click', (e) => retrieveCharacters(e))
+    // let btn1 = createBtn()
+    //     btn1.type = 'button'
+    //     btn1.className += 'btn btn-secondary btn-sm'  
+    //     btn1.innerText = 'edit'  
     ul.append(li1, li2, li3, li4, li5, li6, li7, li8, li9, img)
     h2.append(ul)
     newDiv.append(h2, btn)
@@ -148,8 +165,11 @@ function retrieveCharacters(e){
     let rowClass = document.querySelector('.row')
     let charDiv = document.getElementById('cardInfo')
     let cardDiv = document.getElementById('card-div')
-    rowClass.removeChild(charDiv)
+    let form = document.getElementById('div-form')
+    charDiv.remove()
     cardDiv.style.display = "block"
+    form.style.display = "block"
+
 }
 
 
@@ -158,24 +178,30 @@ function editChar(e, character){
     let form = getForm()
    let arr = getNuArr()
    
-   arr[0].children[0].value = character.name
-   arr[1].children[0].value = character.gender
-   arr[2].children[0].value = character.background
-   arr[3].children[0].value = character.race
-   arr[4].children[0].value = character.picture 
+   console.log(arr)
+   
+    form.id = character.id 
+   arr[0].value = character.name
+   arr[1].value = character.gender
+   arr[2].value = character.background
+   arr[3].value = character.race
+  
+   arr[4].value = character.picture 
    arr[5].value = character.strength 
    arr[6].value = character.dexterity
    arr[7].value = character.constitution 
    arr[8].value = character.intelligence 
    arr[9].value = character.wisdom
    arr[10].value = character.charisma
-   form.addEventListener('submit', (e) => changeChar(e, character.id))
 }
 
-function changeChar(e, characterId){
+
+
+function changeChar(e){
     e.preventDefault()
     let arr = getNuArr()
-    let charId = parseInt(characterId)
+    let charId = e.currentTarget.id
+    
 
     fetch(`http://localhost:3000/characters/${charId}`, {
         method: 'PATCH', 
@@ -184,37 +210,38 @@ function changeChar(e, characterId){
             Accept: 'application/json'
         },
         body: JSON.stringify({
-            name: arr[0].children[0].value,
-            gender: arr[1].children[0].value, 
-            background: arr[2].children[0].value, 
-            race: arr[3].children[0].value,
-            picture: arr[4].children[0].value,
+            name: arr[0].value,
+            gender: arr[1].value, 
+            background: arr[2].value, 
+            race: arr[3].value,
             strength: arr[5].value,
             dexterity: arr[6].value, 
             constitution:  arr[7].value, 
             intelligence:  arr[8].value, 
             wisdom:  arr[9].value, 
             charisma:  arr[10].value, 
+            picture: arr[4].value
         })
     })
     .then(resp => resp.json())
     .then(data => characterInfo(data))
+    getForm().reset()
+   
 }
 
-function attributes(){
-    
-   return {
-    name: arr[0].children[0].value,
-    gender: arr[1].children[0].value, 
-    background: arr[2].children[0].value, 
-    race: arr[3].children[0].value,
-    picture: arr[4].children[0].value,
-    strength: arr[5].value,
-    dexterity: arr[6].value, 
-    constitution:  arr[7].value, 
-    intelligence:  arr[8].value, 
-    wisdom:  arr[9].value, 
-    charisma:  arr[10].value, 
-    }
+function attributes(arr){
+   return [
+    arr[0].value = "",
+    arr[1].value = "", 
+    arr[2].cvalue = "", 
+    arr[3].value = "",
+    arr[4].value = "",
+    arr[5].value = "",
+    arr[6].value = "", 
+    arr[7].value = "", 
+    arr[8].value = "", 
+    arr[9].value = "", 
+    arr[10].value = "" 
+   ]
 
 }
