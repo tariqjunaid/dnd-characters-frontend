@@ -1,21 +1,21 @@
 document.addEventListener('DOMContentLoaded', init())
 
 function init(){
-    // clearHTML()
-    getUser()
+     clearHTML()
+     getUser()
     
+    //checks to see if the submit is for posting a new character or editing an existing one
+    getForm().addEventListener("submit", (e) => {
+        e.preventDefault()
+        if(e.currentTarget.id === 'postForm'){
+             createCharacter(e) //line 144
+        }else{
+            changeChar(e) // line 270
+         }
+    })
 }
 
-getForm().addEventListener("submit", (e) => {
-    e.preventDefault()
-  if(e.currentTarget.id === 'postForm'){
-      createCharacter(e)
-  }else{
-      changeChar(e)
-  }
-})
-
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////CREATING ELEMENTS////////////////////////////////////
 function createDiv(){
     return document.createElement('div')
 }
@@ -28,123 +28,161 @@ function createBtn(){
     return document.createElement('btn')
 }
 
-function clearHTML(){
-  div1 =  document.getElementById('bigaf-container')
-  div1.style.display = "none";
-}
-
-function getForm(){
-    return document.getElementById('postForm')
-
-}
-
-
-function getNuArr(){
-    let arr = document.getElementsByClassName('form-input')
-    return arr
-}
-
-function showHTML(){
-   return document.getElementById("bigaf-container").style.display = "block"
-}
-
 function createCardDiv(){
     let div = createDiv()
     div.classList.add('col-6')
     div.id = 'cardInfo'
     return div
 }
-////////////////////////////////////////////////////////////////////////
-function getUser(){
-   let user = document.getElementById('userName')
-  return user.addEventListener('submit', (e) => grabUserInfo(e))
+
+/////////////////////////CLEARING AND SHOWING HTML///////////////////////////
+
+function clearHTML(){
+  div1 =  document.getElementById('bigaf-container')
+  div1.style.display = "none";
 }
 
+function showHTML(){
+    return document.getElementById("bigaf-container").style.display = "block"
+ }
+
+////////////////////////////GETTING FUNCTIONS/////////////////////////////////////
+function getForm(){
+    return document.getElementById('postForm')
+}
+
+function getUser(){
+    let user = document.getElementById('userName')
+   return user.addEventListener('submit', (e) => grabUserInfo(e))//line 71
+ }
+
+function getNuArr(){
+    //gets the inputs of the form by class name
+    let arr = document.getElementsByClassName('form-input')
+    return arr
+}
+
+
+////////////////////////////////////////////////////////////////////////
+
+
+
+//grabing user information w/fetch 
 function grabUserInfo(e){
     e.preventDefault()
    let name = e.target.children[1].value 
-  
+    
     fetch(`http://localhost:3000/users/${name}`)
         .then(resp => resp.json())
         .then(user => display(user))
 }
 
+//if the user exists, display their name and other info 
 function display(user){
     //check if user exists here 
     if(user.username == undefined){
         alert("User Does Not Exist!")   
     }else{
     showHTML()
-    let div = document.getElementById('username') 
+    let userDiv = document.querySelector('.userDiv')
+    userDiv.id = user.id
+    
     let h2 = document.createElement('h2')
     h2.innerText = user.username
-    div.innerHTML = ''
-    div.appendChild(h2)
+    userDiv.innerHTML = ''
+    userDiv.appendChild(h2)
+    //putting characters to cards
     user.characters.forEach(character => { 
-        let div0 = document.querySelector('#card-div')
-        let div1 = createDiv()
-            div1.classList.add('card')
-            div1.style.width = "12rem; float: left;";
-        let div2 = createDiv()
-            div2.classList.add('card-body')
-        let h5 = document.createElement('h5')
-            h5.classList.add('card-title')
-            h5.innerText = character.name
-        let img = document.createElement('img')
-            img.src = character.picture
-            img.classList.add("card-img-top")
-            img.addEventListener('click', (e) => {
-                fetchCharacter(character)
-                
-            })
-        let btn1 = document.createElement('button')
-            btn1.className += 'btn btn-secondary btn-sm'
-            btn1.innerText = 'Edit'
-            btn1.dataset.characterId = character.id
-            btn1.addEventListener('click', (e) => {
-                editChar(e, character)
-            })
-        div2.append(h5)
-        div1.append(img, div2, btn1)
-        div0.append(div1)    
+         createCard(character)//line 102
         })
-   }
+     }
 }
 
+//creates cards w/image and name for characters and puts to DOM
+function createCard(character){
+    let div0 = document.querySelector('#card-div')
+    let div1 = createDiv()
+        div1.classList.add('card')
+        div1.style.width = "12rem";
+        div1.style.cssFloat = "left"
+    let div2 = createDiv()
+        div2.classList.add('card-body')
+    let h5 = document.createElement('h5')
+        h5.classList.add('card-title')
+        h5.innerText = character.name
+    let img = document.createElement('img')
+        img.src = character.picture
+        img.classList.add("card-img-top")
+        //add event listener to display information of the character
+        img.addEventListener('click', (e) => {
+            getCharacter(character) //line 174
+        })
+    let btn1 = document.createElement('button')
+        btn1.className += 'btn btn-secondary btn-sm btn-info'
+        btn1.innerText = 'Edit'
+        btn1.dataset.characterId = character.id
+        //when clicked this puts the character's information to the form 
+        btn1.addEventListener('click', (e) => {
+            editChar(e, character) //line 244
+        })
+    let btn2 = document.createElement('button')
+        btn2.className += 'btn btn-secondary btn-sm btn-danger'
+        btn2.innerText = 'Delete'
+        btn2.dataset.characterId = character.id
+        //when clicked, this will delete a character
+        btn2.addEventListener('click', (e) => {
+            deleteCharacter(e, character) //line 302
+        })
+    div2.append(h5)
+    div1.append(img, div2, btn1, btn2)
+    div0.append(div1)    
+}
+   
 
+
+//uses fetch to create a new character and posts to Dom
 function createCharacter(e){
     let arr = getNuArr()
-
-    debugger
-    // fetch(`http://localhost:3000/characters`, {
-    //     method: 'POST', 
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         Accept: 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //         name: arr[0].value,
-    //         gender: arr[1].value, 
-    //         background: arr[2].value, 
-    //         race: arr[3].value,
-    //         strength: arr[5].value,
-    //         dexterity: arr[6].value, 
-    //         constitution:  arr[7].value, 
-    //         intelligence:  arr[8].value, 
-    //         wisdom:  arr[9].value, 
-    //         charisma:  arr[10].value, 
-    //         picture: arr[4].value,
-    //         user_id: something
-    //     })
-    // })
+    let user = document.querySelector('.userDiv')
+    fetch(`http://localhost:3000/characters`, {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+        },
+        body: JSON.stringify({
+            name: arr[0].value,
+            gender: arr[1].value, 
+            background: arr[2].value, 
+            race: arr[3].value,
+            strength: arr[5].value,
+            dexterity: arr[6].value, 
+            constitution:  arr[7].value, 
+            intelligence:  arr[8].value, 
+            wisdom:  arr[9].value, 
+            charisma:  arr[10].value, 
+            picture: arr[4].value,
+            user_id: user.id
+        })
+    })
+    .then(resp => resp.json())
+    .then(data => createCard(data))//line 101
+    getForm().reset()
 }
 
-function fetchCharacter(character){
+//gets specific character w/fetch and display info to DOM
+function getCharacter(character){
     fetch(`http://localhost:3000/characters/${character.id}`)
-        .then(resp => resp.json())
-        .then(data => characterInfo(data))
+    .then(resp => resp.json())
+    .then(data => characterInfo(data))//line 179
 }
 
+
+//grabs the character information
+//sets all html display within divs to hidden
+//creates a ul with li's to display character information 
+//creates an img tag that fits a character's picture 
+//creates a back button 
 function characterInfo(character){
     let rowClass = document.querySelector('.row')
     let cardDiv = document.getElementById('card-div')
@@ -172,6 +210,8 @@ function characterInfo(character){
     let li9 = createLi()
         li9.innerText = `Charisma: ${character.charisma}`
     let img = document.createElement('img')
+        img.style.width = "12rem";
+        img.style.cssFloat = "left"
         img.src = character.picture
     let h2 = document.createElement('h2')
         h2.innerText = character.name
@@ -179,17 +219,15 @@ function characterInfo(character){
         btn.type = 'button'
         btn.className += 'btn btn-secondary btn-sm'
         btn.innerText = 'go back'
-        btn.addEventListener('click', (e) => retrieveCharacters(e))
-    // let btn1 = createBtn()
-    //     btn1.type = 'button'
-    //     btn1.className += 'btn btn-secondary btn-sm'  
-    //     btn1.innerText = 'edit'  
-    ul.append(li1, li2, li3, li4, li5, li6, li7, li8, li9, img)
+        //when clicked, shows everyting back to DOM 
+        btn.addEventListener('click', (e) => retrieveCharacters(e))//line 229
+    ul.append(li1, li2, li3, li4, li5, li6, li7, li8, li9, img, btn)
     h2.append(ul)
-    newDiv.append(h2, btn)
+    newDiv.append(h2)
     rowClass.append(newDiv)
 }
 
+//puts everything back to DOM and removes the information previously displayed
 function retrieveCharacters(e){
     let rowClass = document.querySelector('.row')
     let charDiv = document.getElementById('cardInfo')
@@ -201,20 +239,20 @@ function retrieveCharacters(e){
 
 }
 
-
+//sends a fetch to get character information and put it to the form
+//changes form's id to 'patchForm'
 function editChar(e, character){
-    
-    let form = getForm()
+   let form = getForm()
    let arr = getNuArr()
    form.id = 'patchForm'
-   console.log(arr)
-   
-    form.dataset.id = character.id 
+   fetch(`http://localhost:3000/characters/${character.id}`)
+    .then(resp => resp.json())
+    .then(character => {
+   form.dataset.id = character.id 
    arr[0].value = character.name
    arr[1].value = character.gender
    arr[2].value = character.background
    arr[3].value = character.race
-  
    arr[4].value = character.picture 
    arr[5].value = character.strength 
    arr[6].value = character.dexterity
@@ -222,16 +260,16 @@ function editChar(e, character){
    arr[8].value = character.intelligence 
    arr[9].value = character.wisdom
    arr[10].value = character.charisma
+    })
 }
 
 
-
+// sends a PATCH to change the data of the character
+//changes the form's id back to 'postForm'
+// then resets form 
 function changeChar(e){
-    
     let arr = getNuArr()
     let charId = e.currentTarget.dataset.id
-    
-
     fetch(`http://localhost:3000/characters/${charId}`, {
         method: 'PATCH', 
         headers: {
@@ -253,10 +291,21 @@ function changeChar(e){
         })
     })
     .then(resp => resp.json())
-    .then(data => characterInfo(data))
+    //puts the character information to DOM and hides everything else 
+    .then(data => characterInfo(data)) //line 186
     e.target.id = 'postForm'
     getForm().reset()
    
 }
 
+//delete character and removes card from DOM
+function deleteCharacter(e, character){
+    let card = e.target.parentElement
+        fetch(`http://localhost:3000/characters/${character.id}`,{
+            method: 'DELETE',
+        })
+        .then(resp => resp.json())
+        .then(data => console.log(data))
+        card.remove()
+}
 
