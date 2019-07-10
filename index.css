@@ -1,7 +1,6 @@
 .form-div {
     border: solid 2px black;
     padding: 30px;
-    /* margin: 20px; */
 }
 
 .form {
@@ -10,7 +9,9 @@
 
 .userDiv {
     padding: 10px;
-    /* margin: 10px; */
     background-color: darkgrey;
 }
 
+.card-img-top{
+    height: 300px;
+}

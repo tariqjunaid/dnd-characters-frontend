@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', init())
 
 function init(){
-    clearHTML()
+    // clearHTML()
     getUser()
     
 }
