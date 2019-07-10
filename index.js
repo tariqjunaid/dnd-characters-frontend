@@ -119,6 +119,7 @@ function createCard(character){
     let div0 = document.querySelector('#card-div')
     let div1 = createDiv()
         div1.classList.add('card')
+        div1.dataset.id = character.id
         div1.style.width = "12rem";
         div1.style.cssFloat = "left"
     let div2 = createDiv()
@@ -151,7 +152,7 @@ function createCard(character){
         })
     div2.append(h5)
     div1.append(img, div2, btn1, btn2)
-    div0.append(div1)    
+    div0.appendChild(div1)    
 }
    
 
@@ -293,12 +294,23 @@ function editChar(e, character){
 }
 
 
+function getCardDiv(e, value){
+    e.target.dataset.id 
+    let cards = document.getElementsByClassName('card')
+    let arrCards = Array.from(cards)
+
+   let card = arrCards.filter(card => {return card.dataset.id === e.target.dataset.id})
+   card[0].children[0].src = value
+}
+
 // sends a PATCH to change the data of the character
 //changes the form's id back to 'postForm'
 // then resets form 
 function changeChar(e){
     let arr = getNuArr()
+    getCardDiv(e, arr[4].value )
     let charId = e.currentTarget.dataset.id
+
     fetch(`http://localhost:3000/characters/${charId}`, {
         method: 'PATCH', 
         headers: {
@@ -324,7 +336,6 @@ function changeChar(e){
     .then(data => characterInfo(data)) //line 186
     e.target.id = 'postForm'
     getForm().reset()
-   
 }
 
 //delete character and removes card from DOM
