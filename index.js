@@ -235,7 +235,7 @@ function characterInfo(character){
         li9.innerText = `Charisma: ${character.charisma}`
         li9.style.color = "white"
     let img = document.createElement('img')
-        img.style.width = "12rem";
+        img.style.width = "24rem";
         img.style.cssFloat = "left"
         img.src = character.picture
     let h2 = document.createElement('h2')
@@ -248,10 +248,10 @@ function characterInfo(character){
         btn.style.backgroundColor = 'green'
         //when clicked, shows everyting back to DOM 
         btn.addEventListener('click', (e) => retrieveCharacters(e))//line 238
-    ul.append(li1, li2, li3, li4, li5, li6, li7, li8, li9, img, btn)
+    ul.append(li1, li2, li3, li4, li5, li6, li7, li8, li9, btn)
     h2.append(ul)
     newDiv.append(h2)
-    rowClass.append(newDiv)
+    rowClass.append(newDiv, img)
 }
 
 //puts everything back to DOM and removes the information previously displayed
@@ -260,6 +260,8 @@ function retrieveCharacters(e){
     let charDiv = document.getElementById('cardInfo')
     let cardDiv = document.getElementById('card-div')
     let form = document.getElementById('div-form')
+    
+    rowClass.children[3].remove()
     charDiv.remove()
     cardDiv.style.display = "block"
     form.style.display = "block"
