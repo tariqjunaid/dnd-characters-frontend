@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', init())
 
 function init(){
      clearHTML()
-     getUserDiv()
+    
      getUser()
      
     
@@ -40,10 +40,9 @@ function createCardDiv(){
 /////////////////////////CLEARING AND SHOWING HTML///////////////////////////
 
 function clearHTML(){
-  div1 =  document.getElementById('div-form')
-  div2 = document.getElementById('card-div')
+  div1 =  document.getElementById("bigaf-container")
   div1.style.display = "none";
-  div2.style.display = "none";
+  
 }
 
 function showHTML(){
@@ -71,6 +70,9 @@ function getUserDiv(){
    let div = document.querySelector('.userDiv')
    div.classList.add('col-12')
    div.style.textAlign = "center"
+   div.style.height = "100px"
+   div.style.width = "100px"
+   div.style.display = "inline-block"
     row.append(div)
    return row
 }
@@ -99,11 +101,12 @@ function display(user){
     showHTML()
     let userDiv = document.querySelector('.userDiv')
     userDiv.id = user.id
-    
+    let header = document.querySelector('.header')
     let h5 = document.createElement('h5')
     h5.innerText = `Welcome ${user.username}!`
+    h5.style.color = 'white'
     userDiv.innerHTML = ''
-    userDiv.appendChild(h5)
+    header.appendChild(h5)
     //putting characters to cards
     user.characters.forEach(character => { 
          createCard(character)//line 102
@@ -205,29 +208,39 @@ function characterInfo(character){
     let newDiv = createCardDiv()
     let ul = document.createElement('ul')
     let li1 = createLi()
-        li1.innerText = `Gender: ${character.gender}` 
+        li1.innerText = `Gender: ${character.gender}`
+        li1.style.color = "white" 
     let li2 = createLi()
         li2.innerText = `Background: ${character.background}`
+        li2.style.color = "white"
     let li3 = createLi()
         li3.innerText = `Race: ${character.race}`
+        li3.style.color = "white"
     let li4 = createLi()
         li4.innerText = `Strength: ${character.strength}`
+        li4.style.color = "white"
     let li5 = createLi()
         li5.innerText = `Dexterity: ${character.dexterity}`
+        li5.style.color = "white"
     let li6 = createLi()
         li6.innerText = `Constitution: ${character.constitution}`
+        li6.style.color = "white"
     let li7 = createLi()
         li7.innerText = `Intelligence: ${character.intelligence}`
+        li7.style.color = "white"
     let li8 = createLi()
         li8.innerText = `Wisdom: ${character.wisdom}`
+        li8.style.color = "white"
     let li9 = createLi()
         li9.innerText = `Charisma: ${character.charisma}`
+        li9.style.color = "white"
     let img = document.createElement('img')
         img.style.width = "12rem";
         img.style.cssFloat = "left"
         img.src = character.picture
     let h2 = document.createElement('h2')
         h2.innerText = character.name
+        h2.style.color = "white"
     let btn = createBtn()
         btn.type = 'button'
         btn.className += 'btn btn-secondary btn-sm'
