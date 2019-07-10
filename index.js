@@ -5,7 +5,16 @@ function init(){
     getUser()
     
 }
-getForm().addEventListener("submit", changeChar)
+
+getForm().addEventListener("submit", (e) => {
+    e.preventDefault()
+  if(e.currentTarget.id === 'postForm'){
+      createCharacter(e)
+  }else{
+      changeChar(e)
+  }
+})
+
 ////////////////////////////////////////////////////////////////////////
 function createDiv(){
     return document.createElement('div')
@@ -25,9 +34,10 @@ function clearHTML(){
 }
 
 function getForm(){
-    return document.getElementById('div-form').children[0]
+    return document.getElementById('postForm')
 
 }
+
 
 function getNuArr(){
     let arr = document.getElementsByClassName('form-input')
@@ -38,10 +48,6 @@ function showHTML(){
    return document.getElementById("bigaf-container").style.display = "block"
 }
 
-function getSubmit(){
-    
-        
-}
 function createCardDiv(){
     let div = createDiv()
     div.classList.add('col-6')
@@ -78,7 +84,7 @@ function display(user){
         let div0 = document.querySelector('#card-div')
         let div1 = createDiv()
             div1.classList.add('card')
-            div1.style.width = "18rem";
+            div1.style.width = "12rem; float: left;";
         let div2 = createDiv()
             div2.classList.add('card-body')
         let h5 = document.createElement('h5')
@@ -106,8 +112,31 @@ function display(user){
 }
 
 
-function createCharacter(){
+function createCharacter(e){
+    let arr = getNuArr()
 
+    debugger
+    // fetch(`http://localhost:3000/characters`, {
+    //     method: 'POST', 
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         Accept: 'application/json'
+    //     },
+    //     body: JSON.stringify({
+    //         name: arr[0].value,
+    //         gender: arr[1].value, 
+    //         background: arr[2].value, 
+    //         race: arr[3].value,
+    //         strength: arr[5].value,
+    //         dexterity: arr[6].value, 
+    //         constitution:  arr[7].value, 
+    //         intelligence:  arr[8].value, 
+    //         wisdom:  arr[9].value, 
+    //         charisma:  arr[10].value, 
+    //         picture: arr[4].value,
+    //         user_id: something
+    //     })
+    // })
 }
 
 function fetchCharacter(character){
@@ -177,10 +206,10 @@ function editChar(e, character){
     
     let form = getForm()
    let arr = getNuArr()
-   
+   form.id = 'patchForm'
    console.log(arr)
    
-    form.id = character.id 
+    form.dataset.id = character.id 
    arr[0].value = character.name
    arr[1].value = character.gender
    arr[2].value = character.background
@@ -198,9 +227,9 @@ function editChar(e, character){
 
 
 function changeChar(e){
-    e.preventDefault()
+    
     let arr = getNuArr()
-    let charId = e.currentTarget.id
+    let charId = e.currentTarget.dataset.id
     
 
     fetch(`http://localhost:3000/characters/${charId}`, {
@@ -225,23 +254,9 @@ function changeChar(e){
     })
     .then(resp => resp.json())
     .then(data => characterInfo(data))
+    e.target.id = 'postForm'
     getForm().reset()
    
 }
 
-function attributes(arr){
-   return [
-    arr[0].value = "",
-    arr[1].value = "", 
-    arr[2].cvalue = "", 
-    arr[3].value = "",
-    arr[4].value = "",
-    arr[5].value = "",
-    arr[6].value = "", 
-    arr[7].value = "", 
-    arr[8].value = "", 
-    arr[9].value = "", 
-    arr[10].value = "" 
-   ]
 
-}
