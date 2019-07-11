@@ -120,7 +120,7 @@ function display(user){
     if(user.username == undefined){
         alert("User Does Not Exist!")   
     }
-    else if(user.password == undefined){
+    else if(user.password_digest == undefined){
         alert("User Does Not Exist!")
     }
     else{
