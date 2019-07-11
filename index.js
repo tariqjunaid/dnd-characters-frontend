@@ -224,14 +224,15 @@ function characterInfo(character){
     let picDiv = createDiv()
         picDiv.classList.add("card")
         picDiv.classList.add("border-success")
-        picDiv.classList.add("mb-3")
-        picDiv.style.width = "22rem";
-        picDiv.style.cssFloat = "left"
+        picDiv.classList.add("mb-5")
+
+        picDiv.style.maxWidth = "24rem";
+        //picDiv.style.cssFloat = "left"
         picDiv.append(img)
     let h2 = createH2(character)
     let btn = createBtn()
         btn.type = 'button'
-        btn.className += 'btn btn-primary btn-sm'
+        btn.className += 'btn btn-secondary btn-sm'
         btn.innerText = 'go back'
         btn.style.backgroundColor = 'red'
         //when clicked, shows everyting back to DOM 
