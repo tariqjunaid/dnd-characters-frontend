@@ -104,11 +104,12 @@ function getUserDiv(){
 function grabUserInfo(e){
     e.preventDefault()
    let name = e.target.children[1].value 
+   let password1 = e.target.children[2].value 
    let firstLetter = name.charAt(0).toUpperCase()
    let nuName = firstLetter + name.slice(1)
    
     
-    fetch(`http://localhost:3000/users/${nuName}`)
+    fetch(`http://localhost:3000/users/${nuName}/${password1}`)
         .then(resp => resp.json())
         .then(user => display(user))
 }
@@ -118,7 +119,11 @@ function display(user){
     //check if user exists here 
     if(user.username == undefined){
         alert("User Does Not Exist!")   
-    }else{
+    }
+    else if(user.password == undefined){
+        alert("User Does Not Exist!")
+    }
+    else{
     showHTML()
     let userDiv = document.querySelector('.userDiv')
     userDiv.id = user.id
