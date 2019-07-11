@@ -23,7 +23,9 @@ function createDiv(){
 }
 
 function createLi(){
-    return document.createElement('li')
+    let li = document.createElement('li')
+    li.style.color = "white"
+    return li
 }
 
 function createBtn(){
@@ -35,6 +37,24 @@ function createCardDiv(){
     div.classList.add('col-6')
     div.id = 'cardInfo'
     return div
+}
+
+function createH5(character){
+   let h5 = document.createElement('h5')
+        h5.classList.add('card-title')
+        h5.innerText = character.name
+        return h5
+}
+
+function createImg(){
+    return document.createElement('img')
+}
+
+function createH2(character){
+    let h2 = document.createElement('h2')
+    h2.innerText = character.name
+    h2.style.color = "white"
+    return h2
 }
 
 /////////////////////////CLEARING AND SHOWING HTML///////////////////////////
@@ -81,7 +101,7 @@ function getUserDiv(){
 ////////////////////////////////////////////////////////////////////////
 
 
-
+///////////////////////////////READ USER/////////////////////////////////////////
 //grabing user information w/fetch 
 function grabUserInfo(e){
     e.preventDefault()
@@ -109,11 +129,12 @@ function display(user){
     header.appendChild(h5)
     //putting characters to cards
     user.characters.forEach(character => { 
-         createCard(character)//line 102
+         createCard(character)
         })
      }
 }
 
+/////////////////////////////////READ USER'S CHARACTER//////////////////////////////
 //creates cards w/image and name for characters and puts to DOM
 function createCard(character){
     let div0 = document.querySelector('#card-div')
@@ -124,25 +145,24 @@ function createCard(character){
         div1.style.cssFloat = "left"
     let div2 = createDiv()
         div2.classList.add('card-body')
-    let h5 = document.createElement('h5')
-        h5.classList.add('card-title')
-        h5.innerText = character.name
-    let img = document.createElement('img')
+    let h5 = createH5(character)
+    let img = createImg()
         img.src = character.picture
         img.classList.add("card-img-top")
         //add event listener to display information of the character
         img.addEventListener('click', (e) => {
             getCharacter(character) //line 174
         })
-    let btn1 = document.createElement('button')
+    let btn1 = createBtn()
         btn1.className += 'btn btn-secondary btn-sm btn-info'
         btn1.innerText = 'Edit'
         btn1.dataset.characterId = character.id
         //when clicked this puts the character's information to the form 
         btn1.addEventListener('click', (e) => {
             editChar(e, character) //line 244
-        })
-    let btn2 = document.createElement('button')
+            }
+        )
+    let btn2 = createBtn()
         btn2.className += 'btn btn-secondary btn-sm btn-danger'
         btn2.innerText = 'Delete'
         btn2.dataset.characterId = character.id
@@ -154,9 +174,79 @@ function createCard(character){
     div1.append(img, div2, btn1, btn2)
     div0.appendChild(div1)    
 }
+
+//////////////////////READ SPECIFIC CHARACTER INFO.////////////////////////////////
+//gets specific character w/fetch and display info to DOM
+function getCharacter(character){
+    fetch(`http://localhost:3000/characters/${character.id}`)
+    .then(resp => resp.json())
+    .then(data => characterInfo(data))
+}
    
+//grabs the character information
+//sets all html display within divs to hidden
+//creates a ul with li's to display character information 
+//creates an img tag that fits a character's picture 
+//creates a back button 
+function characterInfo(character){
+    let rowClass = document.querySelector('.row')
+    let cardDiv = document.getElementById('card-div')
+    let form = document.getElementById('div-form')
+    cardDiv.style.display = "none";
+    form.style.display = 'none';
+    let newDiv = createCardDiv()
+    let ul = document.createElement('ul')
+    let li1 = createLi()
+        li1.innerText = `Gender: ${character.gender}`
+    let li2 = createLi()
+        li2.innerText = `Background: ${character.background}`
+    let li3 = createLi()
+        li3.innerText = `Race: ${character.race}`
+    let li4 = createLi()
+        li4.innerText = `Strength: ${character.strength}`
+    let li5 = createLi()
+        li5.innerText = `Dexterity: ${character.dexterity}`
+    let li6 = createLi()
+        li6.innerText = `Constitution: ${character.constitution}`
+    let li7 = createLi()
+        li7.innerText = `Intelligence: ${character.intelligence}`
+    let li8 = createLi()
+        li8.innerText = `Wisdom: ${character.wisdom}`
+    let li9 = createLi()
+        li9.innerText = `Charisma: ${character.charisma}`
+    let img = createImg()
+        img.style.width = "24rem";
+        img.style.cssFloat = "left"
+        img.src = character.picture
+    let h2 = createH2(character)
+    let btn = createBtn()
+        btn.type = 'button'
+        btn.className += 'btn btn-secondary btn-sm'
+        btn.innerText = 'go back'
+        btn.style.backgroundColor = 'green'
+        //when clicked, shows everyting back to DOM 
+        btn.addEventListener('click', (e) => retrieveCharacters(e))//line 238
+    ul.append(li1, li2, li3, li4, li5, li6, li7, li8, li9, btn)
+    h2.append(ul)
+    newDiv.append(h2)
+    rowClass.append(newDiv, img)
+}
 
+//puts everything back to DOM and removes the information previously displayed
+function retrieveCharacters(e){
+    let rowClass = document.querySelector('.row')
+    let charDiv = document.getElementById('cardInfo')
+    let cardDiv = document.getElementById('card-div')
+    let form = document.getElementById('div-form')
+    
+    rowClass.children[3].remove()
+    charDiv.remove()
+    cardDiv.style.display = "block"
+    form.style.display = "block"
 
+}
+
+////////////////////////////CREATE CHARACTER////////////////////////////////
 //uses fetch to create a new character and posts to Dom
 function createCharacter(e){
     let arr = getNuArr()
@@ -187,88 +277,8 @@ function createCharacter(e){
     getForm().reset()
 }
 
-//gets specific character w/fetch and display info to DOM
-function getCharacter(character){
-    fetch(`http://localhost:3000/characters/${character.id}`)
-    .then(resp => resp.json())
-    .then(data => characterInfo(data))//line 179
-}
 
-
-//grabs the character information
-//sets all html display within divs to hidden
-//creates a ul with li's to display character information 
-//creates an img tag that fits a character's picture 
-//creates a back button 
-function characterInfo(character){
-    let rowClass = document.querySelector('.row')
-    let cardDiv = document.getElementById('card-div')
-    let form = document.getElementById('div-form')
-    cardDiv.style.display = "none";
-    form.style.display = 'none';
-    let newDiv = createCardDiv()
-    let ul = document.createElement('ul')
-    let li1 = createLi()
-        li1.innerText = `Gender: ${character.gender}`
-        li1.style.color = "white" 
-    let li2 = createLi()
-        li2.innerText = `Background: ${character.background}`
-        li2.style.color = "white"
-    let li3 = createLi()
-        li3.innerText = `Race: ${character.race}`
-        li3.style.color = "white"
-    let li4 = createLi()
-        li4.innerText = `Strength: ${character.strength}`
-        li4.style.color = "white"
-    let li5 = createLi()
-        li5.innerText = `Dexterity: ${character.dexterity}`
-        li5.style.color = "white"
-    let li6 = createLi()
-        li6.innerText = `Constitution: ${character.constitution}`
-        li6.style.color = "white"
-    let li7 = createLi()
-        li7.innerText = `Intelligence: ${character.intelligence}`
-        li7.style.color = "white"
-    let li8 = createLi()
-        li8.innerText = `Wisdom: ${character.wisdom}`
-        li8.style.color = "white"
-    let li9 = createLi()
-        li9.innerText = `Charisma: ${character.charisma}`
-        li9.style.color = "white"
-    let img = document.createElement('img')
-        img.style.width = "24rem";
-        img.style.cssFloat = "left"
-        img.src = character.picture
-    let h2 = document.createElement('h2')
-        h2.innerText = character.name
-        h2.style.color = "white"
-    let btn = createBtn()
-        btn.type = 'button'
-        btn.className += 'btn btn-secondary btn-sm'
-        btn.innerText = 'go back'
-        btn.style.backgroundColor = 'green'
-        //when clicked, shows everyting back to DOM 
-        btn.addEventListener('click', (e) => retrieveCharacters(e))//line 238
-    ul.append(li1, li2, li3, li4, li5, li6, li7, li8, li9, btn)
-    h2.append(ul)
-    newDiv.append(h2)
-    rowClass.append(newDiv, img)
-}
-
-//puts everything back to DOM and removes the information previously displayed
-function retrieveCharacters(e){
-    let rowClass = document.querySelector('.row')
-    let charDiv = document.getElementById('cardInfo')
-    let cardDiv = document.getElementById('card-div')
-    let form = document.getElementById('div-form')
-    
-    rowClass.children[3].remove()
-    charDiv.remove()
-    cardDiv.style.display = "block"
-    form.style.display = "block"
-
-}
-
+////////////////////////////EDIT CHARACTER////////////////////////////////////////
 //sends a fetch to get character information and put it to the form
 //changes form's id to 'patchForm'
 function editChar(e, character){
@@ -293,15 +303,6 @@ function editChar(e, character){
     })
 }
 
-
-function getCardDiv(e, value){
-    e.target.dataset.id 
-    let cards = document.getElementsByClassName('card')
-    let arrCards = Array.from(cards)
-
-   let card = arrCards.filter(card => {return card.dataset.id === e.target.dataset.id})
-   card[0].children[0].src = value
-}
 
 // sends a PATCH to change the data of the character
 //changes the form's id back to 'postForm'
@@ -338,6 +339,19 @@ function changeChar(e){
     getForm().reset()
 }
 
+
+//When editing a character it grabs the picture and puts it to the DOM
+function getCardDiv(e, value){
+    e.target.dataset.id 
+    let cards = document.getElementsByClassName('card')
+    let arrCards = Array.from(cards)
+
+   let card = arrCards.filter(card => {return card.dataset.id === e.target.dataset.id})
+   card[0].children[0].src = value
+}
+
+
+////////////////////////////////////////DELETE CHARACTER///////////////////////////
 //delete character and removes card from DOM
 function deleteCharacter(e, character){
     let card = e.target.parentElement
