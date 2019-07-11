@@ -2,10 +2,8 @@ document.addEventListener('DOMContentLoaded', init())
 
 function init(){
      clearHTML()
-    
      getUser()
      
-    
     //checks to see if the submit is for posting a new character or editing an existing one
     getForm().addEventListener("submit", (e) => {
         e.preventDefault()
@@ -106,8 +104,11 @@ function getUserDiv(){
 function grabUserInfo(e){
     e.preventDefault()
    let name = e.target.children[1].value 
+   let firstLetter = name.charAt(0).toUpperCase()
+   let nuName = firstLetter + name.slice(1)
+   
     
-    fetch(`http://localhost:3000/users/${name}`)
+    fetch(`http://localhost:3000/users/${nuName}`)
         .then(resp => resp.json())
         .then(user => display(user))
 }
@@ -175,7 +176,7 @@ function createCard(character){
     div0.appendChild(div1)    
 }
 
-//////////////////////READ SPECIFIC CHARACTER INFO.////////////////////////////////
+//////////////////////READ SPECIFIC CHARACTER INFO.////////////////////////////////s
 //gets specific character w/fetch and display info to DOM
 function getCharacter(character){
     fetch(`http://localhost:3000/characters/${character.id}`)
@@ -285,6 +286,7 @@ function editChar(e, character){
    let form = getForm()
    let arr = getNuArr()
    form.id = 'patchForm'
+   form.firstElementChild.innerText = `Edit ${character.name}!` 
    fetch(`http://localhost:3000/characters/${character.id}`)
     .then(resp => resp.json())
     .then(character => {
@@ -354,6 +356,7 @@ function getCardDiv(e, value){
 ////////////////////////////////////////DELETE CHARACTER///////////////////////////
 //delete character and removes card from DOM
 function deleteCharacter(e, character){
+    if (confirm("Are you sure you want to delete?")){
     let card = e.target.parentElement
         fetch(`http://localhost:3000/characters/${character.id}`,{
             method: 'DELETE',
@@ -361,5 +364,6 @@ function deleteCharacter(e, character){
         .then(resp => resp.json())
         .then(data => console.log(data))
         card.remove()
-}
+    }else{}
+}   
 

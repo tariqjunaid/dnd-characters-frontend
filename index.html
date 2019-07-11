@@ -28,41 +28,42 @@
         <div class="row">
             <div class='col-6 form' id='div-form'>
                 <form id="postForm" >
+                    <h2>Create A Character!</h2>
                     <div class="form-group row">
                         <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Name</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control form-control-lg form-input" id="colFormLabelLg" placeholder="enter character name">
+                            <input type="text" class="form-control form-control-lg form-input" id="colFormLabelLg" placeholder="enter character name" required>
                         </div>
                     </div>     
                     <div class="form-group row">
                         <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Gender</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control form-control-lg form-input" id="colFormLabelLg" placeholder="enter gender">
+                            <input type="text" class="form-control form-control-lg form-input" id="colFormLabelLg" placeholder="enter gender" required>
                         </div>
                     </div>        
                     <div class="form-group row">
                         <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Background</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control form-control-lg form-input" id="colFormLabelLg" placeholder="enter background">
+                            <input type="text" class="form-control form-control-lg form-input" id="colFormLabelLg" placeholder="enter background" required>
                         </div>
                     </div>               
                     <div class="form-group row">
                         <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Race</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control form-control-lg form-input" id="colFormLabelLg" placeholder="enter race">
+                            <input type="text" class="form-control form-control-lg form-input" id="colFormLabelLg" placeholder="enter race" required>
                         </div>
                     </div>                          
                     <div class="form-group row">
                         <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Picture Link</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control form-control-lg form-input" id="colFormLabelLg" placeholder="enter picture link">
+                            <input type="text" class="form-control form-control-lg form-input" id="colFormLabelLg" placeholder="enter picture link" required pattern="https?://.+">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Strength</label>
-                        <select class="form-control col-sm-4 form-input" id="strength">
-                            <option selected>Select Strength</option>
+                        <select class="form-control col-sm-4 form-input" id="strength" required>
+                            <option disabled selected value=''>Select Strength</option>
                             <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
                             <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
                             <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
@@ -71,8 +72,8 @@
                     </div>
                     <div class="form-group row">
                         <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Dexterity</label>
-                        <select class="form-control col-sm-4 form-input" id="dexterity">
-                            <option selected>Select Dexterity</option>
+                        <select class="form-control col-sm-4 form-input" id="dexterity"  required>
+                            <option disabled selected value=''>Select Dexterity</option> 
                             <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
                             <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
                             <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
@@ -81,8 +82,8 @@
                     </div>
                     <div class="form-group row">
                         <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Constitution</label>
-                        <select class="form-control col-sm-4 form-input" id="const">
-                            <option selected>Select Constitution</option>
+                        <select class="form-control col-sm-4 form-input" id="const" required>
+                            <option disabled selected value=''>Select Constitution</option>
                             <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
                             <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
                             <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
@@ -91,8 +92,8 @@
                     </div>
                     <div class="form-group row">
                         <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Intelligence</label>
-                        <select class="form-control col-sm-4 form-input" id="intel">
-                            <option selected>Select Intelligence</option>
+                        <select class="form-control col-sm-4 form-input" id="intel" required>
+                            <option disabled selected value=''>Select Intelligence</option>
                             <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
                             <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
                             <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
@@ -101,8 +102,8 @@
                     </div>
                     <div class="form-group row">
                         <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Wisdom</label>
-                        <select class="form-control col-sm-4 form-input" id="wisdom">
-                            <option selected>Select Wisdom</option>
+                        <select class="form-control col-sm-4 form-input" id="wisdom" required>
+                            <option disabled selected value=''>Select Wisdom</option>
                             <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
                             <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
                             <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
@@ -111,8 +112,8 @@
                     </div>
                     <div class="form-group row">
                         <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Charisma</label>
-                        <select class="form-control col-sm-4 form-input" id="charisma">
-                            <option selected>Select Charisma</option>
+                        <select class="form-control col-sm-4 form-input" id="charisma" required>
+                            <option disabled selected value=''>Select Charisma</option>
                             <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
                             <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
                             <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
@@ -125,7 +126,8 @@
             </div>
             
             <div class='col-6 cardz ' id="card-div">
-                <div class="card" style="width: 12rem; float: left;">
+                <h2>Here Are Your Characters!</h2>
+                <!-- <div class="card" style="width: 12rem; float: left;">
                     <img src="https://i.imgur.com/gmNtJeg.png" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">Ragthar</h5>      
@@ -148,7 +150,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Krusk</h5>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
 
