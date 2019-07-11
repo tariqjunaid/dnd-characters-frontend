@@ -216,13 +216,22 @@ function characterInfo(character){
     let li9 = createLi()
         li9.innerText = `Charisma: ${character.charisma}`
     let img = createImg()
-        img.style.width = "24rem";
-        img.style.cssFloat = "left"
+        img.style.width = "20rem";
+        img.style.minHeight = '24rem';
+        img.style.maxHeight = '24rem';
         img.src = character.picture
+        img.classList.add("card-text")
+    let picDiv = createDiv()
+        picDiv.classList.add("card")
+        picDiv.classList.add("border-success")
+        picDiv.classList.add("mb-3")
+        picDiv.style.width = "22rem";
+        picDiv.style.cssFloat = "left"
+        picDiv.append(img)
     let h2 = createH2(character)
     let btn = createBtn()
         btn.type = 'button'
-        btn.className += 'btn btn-secondary btn-sm'
+        btn.className += 'btn btn-primary btn-sm'
         btn.innerText = 'go back'
         btn.style.backgroundColor = 'red'
         //when clicked, shows everyting back to DOM 
@@ -230,7 +239,7 @@ function characterInfo(character){
     ul.append(li1, li2, li3, li4, li5, li6, li7, li8, li9, btn)
     h2.append(ul)
     newDiv.append(h2)
-    rowClass.append(newDiv, img)
+    rowClass.append(newDiv, picDiv)
 }
 
 //puts everything back to DOM and removes the information previously displayed
@@ -239,7 +248,8 @@ function retrieveCharacters(e){
     let charDiv = document.getElementById('cardInfo')
     let cardDiv = document.getElementById('card-div')
     let form = document.getElementById('div-form')
-    
+    // getForm().firstElementChild.innerText = 'Create Character!'
+    // getForm().lastElementChild.remove()
     rowClass.children[3].remove()
     charDiv.remove()
     cardDiv.style.display = "block"
@@ -285,6 +295,13 @@ function createCharacter(e){
 function editChar(e, character){
    let form = getForm()
    let arr = getNuArr()
+   let btn = createBtn()
+        btn.className += 'btn btn-secondary btn-md'
+        btn.id = 'nvm'
+        btn.innerText = 'Nevermind'
+        btn.style.backgroundColor = 'grey'
+        btn.addEventListener('click', (e) => {resetBack(e, btn)})
+   form.append(btn)
    form.id = 'patchForm'
    form.firstElementChild.innerText = `Edit ${character.name}!` 
    fetch(`http://localhost:3000/characters/${character.id}`)
@@ -305,6 +322,19 @@ function editChar(e, character){
     })
 }
 
+//resets page back to normal
+function resetBack(e, btn){
+   let form = e.target.parentElement
+   form.id = 'postForm'
+   form.dataset.id = ''
+   form.firstElementChild.innerText = "Create Character"
+   form.reset()
+   form.removeChild(btn) 
+    
+}
+
+
+
 
 // sends a PATCH to change the data of the character
 //changes the form's id back to 'postForm'
@@ -313,7 +343,6 @@ function changeChar(e){
     let arr = getNuArr()
     getCardDiv(e, arr[4].value )
     let charId = e.currentTarget.dataset.id
-
     fetch(`http://localhost:3000/characters/${charId}`, {
         method: 'PATCH', 
         headers: {
@@ -338,7 +367,11 @@ function changeChar(e){
     //puts the character information to DOM and hides everything else 
     .then(data => characterInfo(data)) //line 186
     e.target.id = 'postForm'
+    
+    getForm().firstElementChild.innerText = 'Create Character!'
     getForm().reset()
+    getForm().lastElementChild.remove()
+    
 }
 
 
