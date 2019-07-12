@@ -194,6 +194,7 @@ function postUserInfo(e){
 function grabUserInfo(e){
     e.preventDefault()
    let name = e.target.children[0].value.trim()
+
    let password1 = e.target.children[1].value.trim()
    let firstLetter = name.charAt(0).toUpperCase()
    let nuName = firstLetter + name.slice(1)
