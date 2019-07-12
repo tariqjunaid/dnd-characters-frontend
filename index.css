@@ -14,10 +14,6 @@ body {
     background-attachment: fixed;
 }
 
-/* .container-fluid {
-    opacity: 0.8;
-} */
-
 .header img {
     float: left;
 }
@@ -36,7 +32,6 @@ body {
 }
 
 .form {
-    /* color: aliceblue; */
     padding: 10px;
     background-color: whitesmoke;
 }
@@ -46,18 +41,10 @@ body {
     background-color: whitesmoke;
 }
 
-
 .card-img-top{
     height: 300px;
 }
 
-/* img {
-    border: solid 2px red;
-} */
-
 .alpha60 {
-    /* Fallback for web browsers that doesn't support RGBa */
-    /* background: rgb(0, 0, 0); */
-    /* RGBa with 0.6 opacity */
     background: rgba(0, 0, 0, 0.6);
-    }
+}

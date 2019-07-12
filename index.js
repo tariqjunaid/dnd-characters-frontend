@@ -172,7 +172,6 @@ function postUserInfo(e){
    let password = e.currentTarget.children[1].value
    let trimPassword = password.trim()
    
-   debugger
     fetch(`http://localhost:3000/users`, {
         method: 'POST',
         headers: {
@@ -195,12 +194,9 @@ function postUserInfo(e){
 function grabUserInfo(e){
     e.preventDefault()
    let name = e.target.children[0].value.trim()
-   
    let password1 = e.target.children[1].value.trim()
-   debugger
    let firstLetter = name.charAt(0).toUpperCase()
    let nuName = firstLetter + name.slice(1)
-   debugger
     
     fetch(`http://localhost:3000/users/${nuName}/${password1}`)
         .then(resp => resp.json())
