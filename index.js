@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', init())
 
 function init(){
      clearHTML()
+     btnOptions()
      getUser()
      createUser()
     //checks to see if the submit is for posting a new character or editing an existing one
@@ -58,8 +59,13 @@ function createH2(character){
 /////////////////////////CLEARING AND SHOWING HTML///////////////////////////
 
 function clearHTML(){
-  div1 =  document.getElementById("bigaf-container")
+    let signUp = document.getElementById('new-user')
+    let login = document.getElementById('userName')
+  let div1 =  document.getElementById("bigaf-container")
   div1.style.display = "none";
+  signUp.style.display = "none";
+  login.style.display = "none";
+
   
 }
 
@@ -98,9 +104,61 @@ function getUserDiv(){
     row.append(div)
    return row
 }
-
+/////////////////////////////BEGINNING OPTIONS/////////////////////////////////////
+function btnOptions(){
+    let userDiv = document.querySelector('.userDiv')
+    let br1 = document.createElement('br')
+    let br2 = document.createElement('br')
+    let btn1 = createBtn()
+        btn1.innerText = "Sign Up"
+        btn1.className += 'btn btn-secondary btn-sm btn-info'
+        btn1.style.display = "block";
+        btn1.addEventListener('click', (e) => signUpSheet(e, btn1, btn2))
+    let btn2 = createBtn()
+        btn2.innerText = "Login"
+        btn2.className += 'btn btn-secondary btn-sm btn-info'
+        btn2.style.display = "block";
+        btn2.addEventListener('click', (e) => loginSheet(e, btn1, btn2))
+    userDiv.append(btn1, br1, br2, btn2)
+}
 
 /////////////////////////////CREATE USER///////////////////////////////////////////
+
+function signUpSheet(e, btn1, btn2){
+
+let signUp = document.getElementById('new-user')
+    signUp.style.display = "block";
+    btn1.style.display = "none";
+    btn2.style.display = "none";
+let btn3 = createBtn()
+    btn3.innerText = "Go Back"
+    btn3.className += 'btn btn-secondary btn-sm btn-info'
+    btn3.addEventListener('click', (e) => goBack(e, btn1, btn2))
+    signUp.append(btn3)
+}
+
+function goBack(e, btn1, btn2){
+    let signUp = document.getElementById('new-user')
+    let login = document.getElementById('userName')
+    let btn3 = e.target
+    login.style.display = "none";
+    signUp.style.display = "none";
+    btn1.style.display = "block";
+    btn2.style.display = "block";
+    btn3.remove()
+}
+function loginSheet(e, btn1, btn2){
+    let login = document.getElementById('userName')
+    login.style.display = "block";
+    btn1.style.display = "none";
+    btn2.style.display = "none";
+    let btn3 = createBtn()
+    btn3.innerText = "Go Back"
+    btn3.className += 'btn btn-secondary btn-sm btn-info'
+    btn3.addEventListener('click', (e) => goBack(e, btn1, btn2))
+    login.append(btn3)
+}
+
 
 function postUserInfo(e){
     e.preventDefault()
@@ -133,7 +191,7 @@ function grabUserInfo(e){
    let password1 = e.target.children[1].value 
    let firstLetter = name.charAt(0).toUpperCase()
    let nuName = firstLetter + name.slice(1)
-   
+   debugger
     
     fetch(`http://localhost:3000/users/${nuName}/${password1}`)
         .then(resp => resp.json())
@@ -143,9 +201,9 @@ function grabUserInfo(e){
 //if the user exists, display their name and other info 
 function display(user){
     
-
-     if(user == null){
-        alert("User Does Not Exist!")   
+    debugger
+     if(user == undefined || user == null){
+        alert("Please Enter A Valid Username or Password!")   
     }
     else if(user.message != null){
         alert(user.message)
