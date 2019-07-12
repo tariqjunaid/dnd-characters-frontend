@@ -142,11 +142,14 @@ function goBack(e, btn1, btn2){
     let login = document.getElementById('userName')
     let btn3 = e.target
     login.style.display = "none";
+    login.reset()
     signUp.style.display = "none";
+    signUp.reset()
     btn1.style.display = "block";
     btn2.style.display = "block";
     btn3.remove()
 }
+
 function loginSheet(e, btn1, btn2){
     let login = document.getElementById('userName')
     login.style.display = "block";
@@ -163,9 +166,13 @@ function loginSheet(e, btn1, btn2){
 function postUserInfo(e){
     e.preventDefault()
    let name = e.currentTarget.children[0].value
-   let firstLetter = name.charAt(0).toUpperCase()
-   let nuName = firstLetter + name.slice(1)
+   let trimName = name.trim()
+   let firstLetter = trimName.charAt(0).toUpperCase()
+   let nuName = firstLetter + trimName.slice(1)
    let password = e.currentTarget.children[1].value
+   let trimPassword = password.trim()
+   
+   debugger
     fetch(`http://localhost:3000/users`, {
         method: 'POST',
         headers: {
@@ -174,7 +181,7 @@ function postUserInfo(e){
         },
         body: JSON.stringify({
             username: nuName,
-            password_digest: password
+            password_digest: trimPassword
         })
     })
     .then(resp => resp.json())
@@ -187,8 +194,10 @@ function postUserInfo(e){
 //grabing user information w/fetch 
 function grabUserInfo(e){
     e.preventDefault()
-   let name = e.target.children[0].value 
-   let password1 = e.target.children[1].value 
+   let name = e.target.children[0].value.trim()
+   
+   let password1 = e.target.children[1].value.trim()
+   debugger
    let firstLetter = name.charAt(0).toUpperCase()
    let nuName = firstLetter + name.slice(1)
    debugger
@@ -201,7 +210,7 @@ function grabUserInfo(e){
 //if the user exists, display their name and other info 
 function display(user){
     
-    debugger
+    
      if(user == undefined || user == null){
         alert("Please Enter A Valid Username or Password!")   
     }
