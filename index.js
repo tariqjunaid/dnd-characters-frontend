@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', init())
 function init(){
      clearHTML()
      getUser()
-     
+     createUser()
     //checks to see if the submit is for posting a new character or editing an existing one
     getForm().addEventListener("submit", (e) => {
         e.preventDefault()
@@ -72,6 +72,10 @@ function getForm(){
     return document.getElementById('postForm')
 }
 
+function createUser(){
+    let nuUser = document.getElementById('new-user')
+    return nuUser.addEventListener('submit', (e) => postUserInfo(e))
+}
 function getUser(){
     let user = document.getElementById('userName')
    return user.addEventListener('submit', (e) => grabUserInfo(e))//line 71
@@ -96,15 +100,37 @@ function getUserDiv(){
 }
 
 
-////////////////////////////////////////////////////////////////////////
+/////////////////////////////CREATE USER///////////////////////////////////////////
+
+function postUserInfo(e){
+    e.preventDefault()
+   let name = e.currentTarget.children[0].value
+   let firstLetter = name.charAt(0).toUpperCase()
+   let nuName = firstLetter + name.slice(1)
+   let password = e.currentTarget.children[1].value
+    fetch(`http://localhost:3000/users`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+        },
+        body: JSON.stringify({
+            username: nuName,
+            password_digest: password
+        })
+    })
+    .then(resp => resp.json())
+    .then(user => display(user))
+   
+}
 
 
 ///////////////////////////////READ USER/////////////////////////////////////////
 //grabing user information w/fetch 
 function grabUserInfo(e){
     e.preventDefault()
-   let name = e.target.children[1].value 
-   let password1 = e.target.children[2].value 
+   let name = e.target.children[0].value 
+   let password1 = e.target.children[1].value 
    let firstLetter = name.charAt(0).toUpperCase()
    let nuName = firstLetter + name.slice(1)
    
@@ -116,12 +142,13 @@ function grabUserInfo(e){
 
 //if the user exists, display their name and other info 
 function display(user){
-    //check if user exists here 
-    if(user.username == undefined){
+    
+
+     if(user == null){
         alert("User Does Not Exist!")   
     }
-    else if(user.password_digest == undefined){
-        alert("User Does Not Exist!")
+    else if(user.message != null){
+        alert(user.message)
     }
     else{
     showHTML()
