@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)http://10.113.109.158:3000/form -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <link rel="shortcut icon" href="http://10.113.109.158:3000/favicon.ico">
+    <link rel="stylesheet" href="./React App_files/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="http://10.113.109.158:3000/manifest.json">
+    <!--
+      Notice the use of  in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+  <style type="text/css">body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image: url(/static/media/DragonPlus.8ef26fc8.jpg);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+div.charStats {
+  background-color: black;
+  background-size:contain;
+  width: 13rem;
+  border: 3px solid orange;
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  padding-bottom: 2rem;
+}
+
+div.proficiencyInfo{
+  background-color: black;
+  width: 17rem;
+  border: 3px solid greenyellow;
+  position: absolute;
+  left: 15rem;
+  top: 1rem;
+  font-size: 13px;
+}
+
+div.hpInfo {
+  background-color: black;
+  width: 15rem;
+  border: 3px solid white;
+  position: absolute;
+  left : 33rem;
+  top: 1rem;
+}
+
+div.charInfo {
+  width: 60rem;
+  height: 15rem;
+  border: 3px solid red;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1rem;
+  position: relative;
+  background-color: black;
+}
+
+div.subCont {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60rem;
+}
+
+div.mainStats {
+  position: relative;
+  padding-top: .5rem;
+}
+
+div.mod{
+  background-color: black;
+  border: 1px solid black;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 2rem;
+  margin-top: 1rem;
+}
+
+div.mainInfo{
+  position: absolute;
+  text-align: left;
+  left: 1rem;
+  top: 1rem;
+}
+
+div.definingInfo{
+  position: absolute;
+  left: 15rem;
+  top: 1rem;
+  text-align: left
+}
+
+div.profSkills{
+  background-color: black;
+  position: relative;
+  border: 1px dotted red;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+div.profStats{
+  background-color: black;
+  position: relative;
+  border: 1px dotted blue;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+table.tableProf{
+  text-align: center;
+  width: 100%;
+}
+
+table.tr{
+  text-align: left;
+}
+
+table.tableSkills{
+  text-align: center;
+  width: 100%;
+}
+
+td.profData{
+  text-align: left;
+  position: absolute;
+  left: 1rem;
+}
+
+td.skillData{
+  text-align: left;
+  position: absolute;
+  left: 1rem;
+}
+
+div.hpData{
+  text-align: right;
+  padding-left: 1rem;
+}
+
+#userviewdiv{
+  color: whitesmoke;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#Footer{
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: 0;
+  color: white;
+  font-size: x-small;
+}
+
+#mainrow{
+  margin-bottom: 50px;
+  width: 100%;
+}
+
+img.avatar{
+  width: 200px;
+  padding: 1rem;
+  position: absolute;
+}
+
+div.loginDiv{
+  width: 20rem;
+  right: 20rem;
+  top: 5rem;
+  padding: 1rem;
+  background-color: whitesmoke;
+  border: 2px solid black;
+  position: absolute;
+}
+
+div.cardPreview{
+  margin: 1rem;
+}</style><style type="text/css">.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.alpha60 {
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+}</style><style type="text/css">.fileUploader {
+	width: 100%;
+}
+
+.fileContainer {
+	background: #fff;
+	box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.05);
+	position: relative;
+	border-radius: 10px;
+	padding: 20px 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	margin: 10px auto;
+	transition: all 0.3s ease-in;
+}
+
+.fileContainer input {
+	opacity: 0;
+	position: absolute;
+	z-index: -1;
+}
+
+.fileContainer p {
+	font-size: 12px;
+	margin: 8px 0 4px;
+}
+
+.fileContainer .errorsContainer {
+	max-width: 300px;
+	font-size: 12px;
+	color: red;
+	text-align: left;
+}
+
+.fileContainer .chooseFileButton {
+	padding: 6px 23px;
+	background: #3f4257;
+	border-radius: 30px;
+	color: white;
+	font-weight: 300;
+	font-size: 14px;
+	margin: 10px 0;
+	transition: all 0.2s ease-in;
+	cursor: pointer;
+	outline: none;
+	border: none;
+}
+
+.fileContainer .chooseFileButton:hover {
+	background: #545972;
+}
+
+.fileContainer .uploadFilesButton {
+	padding: 5px 43px;
+	background: transparent;
+	border-radius: 30px;
+	color: #3f4257;
+	font-weight: 300;
+	font-size: 14px;
+	margin: 10px 0;
+	transition: all 0.2s ease-in;
+	cursor: pointer;
+	outline: none;
+	border: 1px solid #3f4257;
+}
+
+.fileContainer .uploadFilesButton:hover {
+	background: #3f4257;
+	color: #fff;
+}
+
+.fileContainer .uploadIcon {
+	width: 50px;
+	height: 50px;
+}
+
+.fileContainer .uploadPicturesWrapper {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 100%;
+}
+
+.fileContainer .uploadPictureContainer {
+	width: 25%;
+	margin: 5%;
+	padding: 10px;
+	background: #edf2f6;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: inherit;
+	box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+	border: 1px solid #d0dbe4;
+	position: relative;
+}
+
+.fileContainer .uploadPictureContainer img.uploadPicture {
+	width: 100%;
+}
+
+.fileContainer .deleteImage {
+	position: absolute;
+	top: -9px;
+	right: -9px;
+	color: #fff;
+	background: #ff4081;
+	border-radius: 50%;
+	text-align: center;
+	cursor: pointer;
+	font-size: 26px;
+	font-weight: bold;
+	line-height: 30px;
+	width: 30px;
+	height: 30px;
+}
+
+.flipMove {
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+</style></head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"><div class="App"><div><nav class="navbar navbar-expand navbar-dark bg-dark"><span class="navbar-brand">All Summer Days</span><div class="justify-content-end navbar-collapse collapse"><span class="navbar-text">peter</span></div></nav><div id="mainrow" class="row"><div class="col-sm-12"><div><form class=""><div class="row"><div class="col-sm-3"><div class="form-group"><label class="form-label" for="formBasicEmail" style="color: red;">First Name</label><input placeholder="put name first here" type="" id="formBasicEmail" class="firstname form-control"></div><div class="form-group"><label class="form-label" for="exampleForm.ControlInput1" style="color: red;">Last Name</label><input placeholder="put name last here" type="" id="exampleForm.ControlInput1" class="lastname form-control"></div><div class="form-group"><label class="form-label" for="exampleForm.ControlInput1" style="color: red;">Level</label><text id="exampleForm.ControlInput1" class="form-control"><option>2</option></text></div><div class="form-group"><label class="form-label" for="exampleForm.ControlSelect2" style="color: red;">Age</label><input type="number" id="exampleForm.ControlSelect2" class="age form-control"></div><div class="form-group"><label class="form-label" for="exampleForm.ControlSelect2" style="color: red;">Height In Centimeters</label><input type="number" id="exampleForm.ControlSelect2" class="height form-control"></div><div class="form-group"><label class="form-label" for="exampleForm.ControlSelect2" style="color: red;">Weight In Lbs</label><input type="number" id="exampleForm.ControlSelect2" class="weight form-control"></div></div><div class="col-sm-3"><div class="form-group"><label class="form-label" for="exampleForm.ControlSelect2" style="color: red;">Eye Color</label><select id="exampleForm.ControlSelect2" class="eyes form-control"><option>please choose</option><option>Yellow</option><option>Amber</option><option>Brown</option><option>Hazel</option><option>Green</option><option>Blue</option><option>Gray</option><option>Aqua</option><option>Red</option><option>Purple</option><option>Pale Brown</option><option>Pale Blue</option><option>Pale Green</option><option>Pale Gray</option><option>Deep Blue</option><option>Violet Red</option><option>Orange</option><option>Spring Green</option><option>Sea Green</option><option>Emerald Green</option></select></div><div class="form-group"><label class="form-label" for="exampleForm.ControlSelect2" style="color: red;">Skin Color</label><select id="exampleForm.ControlSelect2" class="skin form-control"><option>please choose</option><option>Pale</option><option>Fair</option><option>Light</option><option>Light Tan</option><option>Tan</option><option>Dark Tan</option><option>Brown</option><option>Dark Brown</option><option>Black</option><option>Gray</option><option>White</option><option>Gold</option><option>Silver</option><option>Bronze</option><option>Red</option><option>Orange</option><option>Yellow</option><option>Green</option><option>Blue</option><option>Purple</option><option>Pale Yellow</option><option>Dark Red</option><option>Light Red</option><option>Amber</option><option>Olive</option><option>Aqua</option><option>Pale Brown</option><option>Pale Blue</option><option>Pale Green</option><option>Pale Gray</option><option>Deep Blue</option><option>Violet Red</option><option>Red Orange</option><option>Spring Green</option><option>Sea Green</option><option>Emerald Green</option></select></div><div class="form-group"><label class="form-label" for="exampleForm.ControlSelect2" style="color: red;">Hair Color</label><select id="exampleForm.ControlSelect2" class="hair form-control"><option>please choose</option><option>Black</option><option>Gray</option><option>Platinum</option><option>White</option><option>Dark Blonde</option><option>Blonde</option><option>Bleach Blonde</option><option>Dark Redhead</option><option>Redhead</option><option>Light Redhead</option><option>Brunette</option><option>Auburn</option><option>Yellow</option><option>Amber</option><option>Brown</option><option>Hazel</option><option>Green</option><option>Blue</option><option>Gray</option><option>Aqua</option><option>Red</option><option>Purple</option><option>Pale Brown</option><option>Pale Blue</option><option>Pale Green</option><option>Pale Gray</option><option>Deep Blue</option><option>Violet Red</option><option>Red Orange</option><option>Spring Green</option><option>Sea Green</option><option>Emerald Green</option></select></div><div class="form-group"><label class="form-label" for="exampleForm.ControlTextarea1" style="color: red;">Background</label><textarea rows="3" id="exampleForm.ControlTextarea1" class="background form-control"></textarea></div><div class="form-group"><label class="form-label" for="exampleForm.ControlSelect2" style="color: red;">Alignment</label><select id="exampleForm.ControlSelect2" class="alignment form-control"><option>please choose</option><option>Lawful Good</option><option>Neutral Good </option><option>Chaotic Good </option><option>Lawful Neutral </option><option>Chaotic Neutral </option><option>Lawful Evil </option><option>Neutral Evil </option><option>Chaotic Evil</option></select></div></div><div class="col-sm-3"><div class="form-group"><label class="form-label" for="exampleForm.ControlSelect1" style="color: red;">Character Class</label><select id="exampleForm.ControlSelect1" class="form-control"><option>Please Choose</option><option>Barbarian</option><option>Bard</option><option>Cleric</option><option>Druid</option><option>Fighter</option><option>Monk</option><option>Paladin</option><option>Ranger</option><option>Rogue</option><option>Sorcerer</option><option>Warlock</option><option>Wizard</option></select></div><div class="form-group"><label class="form-label" for="formGridCity" style="color: red;">Strength</label><text id="formGridCity" class="form-control"><option class="Strength" value="8">8</option></text><label class="form-label" for="formGridCity"><button value="8" type="button" class="btn btn-outline-info">+</button>   <span style="color: cyan;">Cost To Increase: 0</span></label></div><div class="form-group"><label class="form-label" for="formGridCity" style="color: red;">Dexterity</label><text id="formGridCity" class="form-control"><option class="Dexterity" value="8">8</option></text><label class="form-label" for="formGridCity"><button value="8" type="button" class="btn btn-outline-info">+</button>   <span style="color: cyan;">Cost To Increase: 0</span></label></div><div class="form-group"><label class="form-label" for="formGridCity" style="color: red;">Constitution</label><text id="formGridCity" class="form-control"><option class="Constitution" value="8">8</option></text><label class="form-label" for="formGridCity"><button value="8" type="button" class="btn btn-outline-info">+</button>   <span style="color: cyan;">Cost To Increase: 0</span></label></div><div class="form-group"><label class="form-label" for="formGridCity" style="color: red;">Intelligence</label><text id="formGridCity" class="form-control"><option class="Intelligence" value="8">8</option></text><label class="form-label" for="formGridCity"><button value="8" type="button" class="btn btn-outline-info">+</button>   <span style="color: cyan;">Cost To Increase: 0</span></label></div><div class="form-group"><label class="form-label" for="formGridCity" style="color: red;">Wisdom</label><text id="formGridCity" class="form-control"><option class="Wisdom" value="8">8</option></text><label class="form-label" for="formGridCity"><button value="8" type="button" class="btn btn-outline-info">+</button>   <span style="color: cyan;">Cost To Increase: 0</span></label></div><div class="form-group"><label class="form-label" for="formGridCity" style="color: red;">Charisma</label><text id="formGridCity" class="form-control"><option class="Charisma" value="8">8</option></text><label class="form-label" for="formGridCity"><button value="8" type="button" class="btn btn-outline-info">+</button>   <span style="color: cyan;">Cost To Increase: 0</span></label></div><button type="submit" class="btn btn-primary" style="width: 10rem;">Submit</button></div><div class="col-sm-3"><div class="card border-primary" style="width: 10rem;"><div class="card-body"><div class="card-title h5"> Points Left: 27</div></div></div><br><div class="card border-primary" style="width: 18rem;"><div class="card-body"><div class="card-title h5"> Chosen Proficiences:</div><ul></ul></div></div><div class="fileUploader "><div class="fileContainer"><img src="./React App_files/UploadIcon.1cedb6e9.svg" class="uploadIcon" alt="Upload Icon"><p class="">Max file size: 5mb, accepted: jpg|gif|png</p><div class="errorsContainer"></div><button type="button" class="chooseFileButton ">Choose images</button><input type="file" name="" multiple="" accept="image/*"></div></div></div></div></form></div></div></div></div></div></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  <script src="./React App_files/bundle.js"></script><script src="./React App_files/1.chunk.js"></script><script src="./React App_files/main.chunk.js"></script><script src="./React App_files/main.87f25217fea0b6d1a8ab.hot-update.js"></script>
+
+<iframe style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; border: none; z-index: 2147483647;" src="./React App_files/saved_resource.html"></iframe></body></html>
